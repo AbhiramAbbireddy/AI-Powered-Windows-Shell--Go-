@@ -1,0 +1,6 @@
+
+input="show files in this folder" | command="dir"
+input="list all files in current directory" | command="cd"
+input="list all files in current directory" | command="cd"
+input="list all files in current directory" | command="dir"
+input="list all files in current directory" | command="dir"
