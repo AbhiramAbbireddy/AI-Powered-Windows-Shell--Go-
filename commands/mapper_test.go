@@ -37,6 +37,13 @@ func TestMapIntent(t *testing.T) {
 			wantCommand: "dir /ad",
 		},
 		{
+			name: "show ip address",
+			intent: parser.Intent{
+				Action: parser.ActionShowIPAddress,
+			},
+			wantCommand: `ipconfig`,
+		},
+		{
 			name: "create folder",
 			intent: parser.Intent{
 				Action: parser.ActionCreateFolder,

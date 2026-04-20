@@ -47,6 +47,11 @@ func TestRuleParserParse(t *testing.T) {
 			wantTarget: "current_directory",
 		},
 		{
+			name:       "show ip address",
+			input:      "what is my ip address",
+			wantAction: ActionShowIPAddress,
+		},
+		{
 			name:       "create folder",
 			input:      "create folder test",
 			wantAction: ActionCreateFolder,

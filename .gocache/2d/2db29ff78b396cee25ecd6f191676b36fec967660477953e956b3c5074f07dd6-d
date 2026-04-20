@@ -1,0 +1,5 @@
+./ai_parser.go
+./intent.go
+./rule_parser.go
+./ai_parser_test.go
+./rule_parser_test.go

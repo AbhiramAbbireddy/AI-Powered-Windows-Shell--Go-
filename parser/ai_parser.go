@@ -73,9 +73,10 @@ func (p AIParser) Parse(input string) (Intent, error) {
 			{
 				Role: "system",
 				Content: "You translate Windows terminal requests into JSON. " +
-					"Allowed actions: list_files, list_folders, print_working_dir, delete_file, create_folder, rename_file, unknown. " +
+					"Allowed actions: list_files, list_folders, print_working_dir, show_ip_address, delete_file, create_folder, rename_file, unknown. " +
 					"Return JSON only with keys action, target, source, destination, requires_info, clarification, explanation. " +
 					"Use list_folders when the user only wants folders. " +
+					"Use show_ip_address when the user asks for their IP address. " +
 					"If required details are missing, set requires_info=true and provide a short clarification question. " +
 					"Never include markdown fences.",
 			},
@@ -136,7 +137,7 @@ func (p AIParser) Parse(input string) (Intent, error) {
 	intent.Explanation = payload.Explanation
 
 	switch intent.Action {
-	case ActionListFiles, ActionListFolders, ActionPrintWorkingDir, ActionDeleteFile, ActionCreateFolder, ActionRenameFile:
+	case ActionListFiles, ActionListFolders, ActionPrintWorkingDir, ActionShowIPAddress, ActionDeleteFile, ActionCreateFolder, ActionRenameFile:
 	case ActionUnknown, "":
 		return intent, ErrUnknownIntent
 	default:

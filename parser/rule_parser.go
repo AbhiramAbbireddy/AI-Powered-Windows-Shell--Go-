@@ -31,6 +31,10 @@ func (RuleParser) Parse(input string) (Intent, error) {
 	switch {
 	case normalized == "":
 		return intent, ErrUnknownIntent
+	case isShowIPAddress(normalized):
+		intent.Action = ActionShowIPAddress
+		intent.Explanation = "Shows Windows network configuration, including IPv4 addresses."
+		return intent, nil
 	case isListFolders(normalized):
 		intent.Action = ActionListFolders
 		intent.Target = "current_directory"
@@ -90,10 +94,25 @@ func (RuleParser) Parse(input string) (Intent, error) {
 	}
 }
 
+func isShowIPAddress(input string) bool {
+	tokens := strings.Fields(input)
+
+	if hasAnyToken(tokens, "ip") && hasAnyToken(tokens, "address", "addresses") {
+		return true
+	}
+
+	return containsPhrase(input,
+		"what is my ip address",
+		"show my ip",
+		"find my ip",
+		"my ip address",
+	)
+}
+
 func isListFolders(input string) bool {
 	tokens := strings.Fields(input)
 
-	if hasAnyToken(tokens, "folder", "folders", "directory", "directories") &&
+	if hasAnyToken(tokens, "folder", "folders") &&
 		hasAnyToken(tokens, "show", "list", "display") &&
 		!hasAnyToken(tokens, "file", "files") {
 		return true

@@ -45,6 +45,33 @@ func TestAIParserParse(t *testing.T) {
 	}
 }
 
+func TestAIParserParseIPAddress(t *testing.T) {
+	t.Parallel()
+
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, `{
+			"choices": [
+				{
+					"message": {
+						"role": "assistant",
+						"content": "{\"action\":\"show_ip_address\",\"target\":\"\",\"source\":\"\",\"destination\":\"\",\"requires_info\":false,\"clarification\":\"\",\"explanation\":\"Shows the local IPv4 address for this Windows machine.\"}"
+					}
+				}
+			]
+		}`)
+	}))
+	defer server.Close()
+
+	parser := NewAIParser("test-key", server.URL, "llama-test", 2*time.Second)
+	intent, err := parser.Parse("what is my ip address")
+	if err != nil {
+		t.Fatalf("expected no error, got %v", err)
+	}
+	if intent.Action != ActionShowIPAddress {
+		t.Fatalf("expected action %q, got %q", ActionShowIPAddress, intent.Action)
+	}
+}
+
 func TestAIParserParseRequiresInfo(t *testing.T) {
 	t.Parallel()
 

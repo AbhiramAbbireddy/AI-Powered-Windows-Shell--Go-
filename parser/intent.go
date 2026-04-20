@@ -6,6 +6,7 @@ const (
 	ActionListFiles       = "list_files"
 	ActionListFolders     = "list_folders"
 	ActionPrintWorkingDir = "print_working_dir"
+	ActionShowIPAddress   = "show_ip_address"
 	ActionDeleteFile      = "delete_file"
 	ActionCreateFolder    = "create_folder"
 	ActionRenameFile      = "rename_file"
@@ -22,13 +23,13 @@ var (
 )
 
 type Intent struct {
-	RawInput     string
-	Normalized   string
-	Action       string
-	Target       string
-	Source       string
-	Destination  string
-	RequiresInfo bool
+	RawInput      string
+	Normalized    string
+	Action        string
+	Target        string
+	Source        string
+	Destination   string
+	RequiresInfo  bool
 	Clarification string
 	Explanation   string
 }

@@ -15,6 +15,8 @@ func MapIntent(intent parser.Intent) (string, string, error) {
 		return CommandDirAD, "Lists folders in the current directory.", nil
 	case parser.ActionPrintWorkingDir:
 		return CommandCD, "Shows the current directory path.", nil
+	case parser.ActionShowIPAddress:
+		return CommandShowLocalIP, "Shows Windows network configuration, including IPv4 addresses.", nil
 	case parser.ActionCreateFolder:
 		if err := validateArgument(intent.Target); err != nil {
 			return "", "", err
